@@ -1,1 +1,694 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Healthcare Hub - HealthHub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0ea5e9;
+            --primary-hover: #0284c7;
+            --primary-light: #f0f9ff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --border: #e2e8f0;
+            --radius: 14px;
+            --transition: all 0.2s ease;
+            --topbar-height: 36px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* DÒNG TRÊN CÙNG (TOP BAR) CHỨA NÚT BACK BIỆT LẬP */
+        .top-utility-bar {
+            background-color: #1e293b; /* Màu nền tối tinh tế để phân biệt vùng điều hướng hệ thống */
+            height: var(--topbar-height);
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 101;
+        }
+
+        .btn-back-webnet {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #94a3b8;
+            transition: var(--transition);
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-back-webnet:hover {
+            color: #ffffff;
+        }
+
+        /* HEADER / NAVBAR CHÍNH */
+        .navbar {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: var(--topbar-height); /* Đẩy xuống dưới Top Bar */
+            z-index: 100;
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .brand span {
+            color: var(--text-main);
+            font-weight: 400;
+            font-size: 1.1rem;
+        }
+
+        .search-container {
+            position: relative;
+            width: 320px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-container input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .search-container::before {
+            content: "🔍";
+            position: absolute;
+            left: 0.9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #0284c7 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 1rem; /* Flow tự nhiên theo navbar */
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            opacity: 0.85;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* MAIN NAVIGATION TABS */
+        .hub-tabs-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem auto 0 auto;
+            max-width: 500px;
+            background: #e2e8f0;
+            padding: 0.35rem;
+            border-radius: 40px;
+        }
+
+        .tab-main-btn {
+            flex: 1;
+            border: none;
+            background: none;
+            padding: 0.65rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #475569;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .tab-main-btn.active {
+            background-color: var(--bg-card);
+            color: var(--primary-hover);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        /* CONTAINER LAYOUT */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* TAB 1: CATEGORIES GRID */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .category-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .category-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.04);
+            border-color: #bae6fd;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .subpage-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+        }
+
+        .subpage-item a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.45rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            color: #334155;
+            transition: var(--transition);
+            background-color: #f8fafc;
+        }
+
+        .subpage-item a:hover {
+            background-color: var(--primary-light);
+            color: var(--primary-hover);
+        }
+
+        .subpage-item.coming-soon {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.45rem 0.75rem;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            opacity: 0.6;
+            font-style: italic;
+        }
+
+        .tag-soon {
+            font-size: 0.7rem;
+            background-color: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-style: normal;
+        }
+
+        /* TAB 2: RSS FEED LAYOUT */
+        .rss-wrapper {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-top: 1rem;
+        }
+
+        .rss-sources-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.75rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .rss-sources-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .rss-src-btn {
+            background: #f1f5f9;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.88rem;
+            cursor: pointer;
+            border-radius: 30px;
+            white-space: nowrap;
+            color: #475569;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .rss-src-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .rss-news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .news-card {
+            padding: 1.5rem; /* Tăng không gian đệm bên trong card */
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            background-color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+
+        .news-card:hover {
+            background-color: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .news-title {
+            font-size: 1.1rem; /* Tăng nhẹ font chữ tiêu đề */
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
+            line-height: 1.4;
+            /* Giữ giới hạn 2-3 dòng cho tiêu đề để giữ form lưới cân đối */
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .news-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            border-top: 1px solid #e2e8f0;
+            padding-top: 0.5rem;
+        }
+
+        .btn-read {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .loading, .error-msg {
+            text-align: center;
+            color: var(--text-muted);
+            grid-column: 1 / -1;
+            padding: 3rem 0;
+        }
+
+        /* ================= RESPONSIVE TRÊN MOBILE ================= */
+        @media (max-width: 768px) {
+            .top-utility-bar {
+                padding: 0 1rem;
+            }
+
+            .navbar {
+                padding: 0.75rem 1rem;
+                flex-direction: column;
+                gap: 0.75rem;
+                align-items: flex-start;
+                top: var(--topbar-height);
+            }
+
+            .search-container {
+                width: 100%;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .hub-tabs-nav {
+                margin: 1.5rem 1rem 0 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .categories-grid, .rss-news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .rss-wrapper {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-utility-bar">
+        <a href="https://ntkientn.github.io/mypage/webnet.html" class="btn-back-webnet">&lt; Back to WebNet</a>
+    </div>
+
+    <nav class="navbar">
+        <div class="brand">🌱 HealthHub <span>| Personal Healthcare</span></div>
+        <div class="search-container">
+            <input type="text" id="hubSearch" placeholder="Tìm kiếm nhanh ..." oninput="filterHub()">
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Sổ Tay Tra Cứu Thông Tin Sức Khỏe Cá Nhân</h1>
+        <p>Không gian lưu trữ thông tin kiến thức về sức khỏe, các bệnh thường gặp, và cập nhật tin tức y học, sức khỏe và đời sống thường thức.</p>
+    </header>
+
+    <div class="hub-tabs-nav">
+        <button class="tab-main-btn active" onclick="switchMainTab('categoriesTab')">📁 Tra Cứu Chủ Đề</button>
+        <button class="tab-main-btn" onclick="switchMainTab('rssTab')">📰 Bản Tin Sức Khỏe</button>
+    </div>
+
+    <main class="container">
+        
+        <div id="categoriesTab" class="tab-panel active">
+            <div class="categories-grid" id="categoriesGrid">
+                </div>
+        </div>
+
+        <div id="rssTab" class="tab-panel">
+            <div class="rss-wrapper">
+                <div class="rss-sources-bar">
+                    <button class="rss-src-btn active" onclick="switchRssSource(0)">Y học 360°</button>
+                    <button class="rss-src-btn" onclick="switchRssSource(1)">Sức khỏe TV</button>
+                    <button class="rss-src-btn" onclick="switchRssSource(2)">Phòng mạch Online</button>
+                    <button class="rss-src-btn" onclick="switchRssSource(3)">VnExpress Sức khỏe</button>
+                </div>
+                <div class="rss-news-grid" id="rssNewsGrid">
+                    <div class="loading">Đang tải bản tin y học thường thức...</div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // ================= CẤU HÌNH API KEY & RSS DATA =================
+        const RSS2JSON_API_KEY = "pxxnsqurnfhxbaqdyrzhsx0socsjhesnrccxieau"; // <-- BẠN DÁN API KEY CỦA BẠN VÀO ĐÂY
+
+        const RSS_FEEDS = [
+            "https://suckhoedoisong.vn/y-hoc-360.rss",
+            "https://suckhoedoisong.vn/suc-khoe-tv.rss",
+            "https://suckhoedoisong.vn/phong-mach-online.rss",
+            "https://vnexpress.net/rss/suc-khoe.rss"
+        ];
+
+        const HEALTHCARE_DATA = [
+            {
+                category: "Xương Khớp",
+                icon: "🦴",
+                subpages: [
+                    { name: "Bệnh Gút (Gout)", url: "https://ntkientn.github.io/mypage/healthcare/gout.html", status: "active" },
+                    { name: "Thoái hóa khớp", url: "#", status: "soon" },
+                    { name: "Thoát vị đĩa đệm", url: "#", status: "soon" },
+                    { name: "Loãng xương", url: "#", status: "soon" }
+                ]
+            },
+            {
+                category: "Rối loạn Chuyển hóa",
+                icon: "🧪",
+                subpages: [
+                    { name: "Bệnh Gút (Gout)", url: "https://ntkientn.github.io/mypage/healthcare/gout.html", status: "active" },
+                    { name: "Tiểu đường Tuýp 2", url: "#", status: "soon" },
+                    { name: "Mỡ máu cao (Lipid)", url: "#", status: "soon" },
+                    { name: "Gan nhiễm mỡ", url: "#", status: "soon" }
+                ]
+            },
+            {
+                category: "Thần Kinh & Tâm Thần",
+                icon: "🧠",
+                subpages: [
+                    { name: "Rối loạn lo âu trầm cảm", url: "https://ntkientn.github.io/mypage/healthcare/loautramcam.html", status: "active" },
+                    { name: "Mất ngủ mãn tính", url: "#", status: "soon" },
+                    { name: "Đau nửa đầu (Migraine)", url: "#", status: "soon" }
+                ]
+            },
+            {
+                category: "Tiêu Hóa",
+                icon: "🍕",
+                subpages: [
+                    { name: "Trào ngược dạ dày (GERD)", url: "#", status: "soon" },
+                    { name: "Viêm đại tràng co thắt", url: "#", status: "soon" },
+                    { name: "Viêm loét dạ dày", url: "#", status: "soon" }
+                ]
+            },
+            {
+                category: "Tim Mạch",
+                icon: "🫀",
+                subpages: [
+                    { name: "Cao huyết áp", url: "#", status: "soon" },
+                    { name: "Bệnh mạch vành", url: "#", status: "soon" },
+                    { name: "Suy tim", url: "#", status: "soon" }
+                ]
+            },
+            {
+                category: "Tai Mũi Họng",
+                icon: "👂",
+                subpages: [
+                    { name: "Viêm xoang mãn tính", url: "#", status: "soon" },
+                    { name: "Viêm mũi dị ứng", url: "#", status: "soon" },
+                    { name: "Viêm họng hạt", url: "#", status: "soon" }
+                ]
+            },
+            {
+                category: "Nha Khoa",
+                icon: "🦷",
+                subpages: [
+                    { name: "Sâu răng & Viêm tủy", url: "#", status: "soon" },
+                    { name: "Viêm nha chu", url: "#", status: "soon" },
+                    { name: "Răng khôn mọc lệch", url: "#", status: "soon" }
+                ]
+            },
+            {
+                category: "Nam Khoa & Phụ Khoa",
+                icon: "🚻",
+                subpages: [
+                    { name: "Rối loạn cương dương", url: "#", status: "soon" },
+                    { name: "Phì đại tuyến tiền liệt", url: "#", status: "soon" },
+                    { name: "Hội chứng buồng trứng đa nang", url: "#", status: "soon" },
+                    { name: "Viêm nhiễm phụ khoa", url: "#", status: "soon" }
+                ]
+            }
+        ];
+
+        // ================= LOGIC CHUYỂN TAB CHÍNH =================
+        function switchMainTab(tabId) {
+            document.querySelectorAll(".tab-panel").forEach(panel => panel.classList.remove("active"));
+            document.querySelectorAll(".tab-main-btn").forEach(btn => btn.classList.remove("active"));
+
+            document.getElementById(tabId).classList.add("active");
+            
+            const activeBtn = Array.from(document.querySelectorAll(".tab-main-btn")).find(btn => btn.getAttribute("onclick").includes(tabId));
+            if(activeBtn) activeBtn.classList.add("active");
+
+            if (tabId === 'rssTab') {
+                loadRssFeed(0);
+            }
+        }
+
+        // ================= LOGIC RENDER DANH MỤC CHỦ ĐỀ =================
+        function renderHealthcareHub(data) {
+            const grid = document.getElementById("categoriesGrid");
+            grid.innerHTML = "";
+
+            data.forEach(item => {
+                let card = document.createElement("div");
+                card.className = "category-card";
+
+                let subpagesHtml = "";
+                item.subpages.forEach(sub => {
+                    if (sub.status === "active") {
+                        subpagesHtml += `<li class="subpage-item"><a href="${sub.url}" target="_blank">${sub.name} <span>➔</span></a></li>`;
+                    } else {
+                        subpagesHtml += `<li class="subpage-item coming-soon">${sub.name} <span class="tag-soon">Soon</span></li>`;
+                    }
+                });
+
+                card.innerHTML = `
+                    <div class="category-header">
+                        <span>${item.icon}</span>
+                        <span>${item.category}</span>
+                    </div>
+                    <ul class="subpage-list">
+                        ${subpagesHtml}
+                    </ul>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Tìm kiếm thời gian thực (Real-time Filter)
+        function filterHub() {
+            switchMainTab('categoriesTab');
+
+            const keyword = document.getElementById("hubSearch").value.toLowerCase().trim();
+            if (!keyword) {
+                renderHealthcareHub(HEALTHCARE_DATA);
+                return;
+            }
+
+            const filtered = HEALTHCARE_DATA.map(cat => {
+                const matchedSubpages = cat.subpages.filter(sub => sub.name.toLowerCase().includes(keyword));
+                if (matchedSubpages.length > 0) {
+                    return { ...cat, subpages: matchedSubpages };
+                }
+                return null;
+            }).filter(cat => cat !== null);
+
+            renderHealthcareHub(filtered);
+        }
+
+        // ================= LOGIC FETCH & RENDER RSS =================
+        // ================= JAVASCRIPT CẬP NHẬT: XỬ LÝ NỘI DUNG RSS ĐẦY ĐỦ =================
+        async function loadRssFeed(srcIdx) {
+            const grid = document.getElementById("rssNewsGrid");
+            grid.innerHTML = '<div class="loading">Đang kết nối luồng dữ liệu tin tức...</div>';
+            
+            const targetRss = RSS_FEEDS[srcIdx];
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(targetRss)}&api_key=${RSS2JSON_API_KEY}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error("CORS proxy hoặc mạng gặp lỗi.");
+                const data = await response.json();
+
+                if (data.status === "ok" && data.items.length > 0) {
+                    grid.innerHTML = "";
+                    data.items.forEach(item => {
+                        // 1. Loại bỏ toàn bộ các thẻ HTML thừa (như hình ảnh nhỏ lỗi, tag <div>, <br> từ RSS)
+                        let cleanDesc = (item.description || "").replace(/<[^>]+>/g, '').trim();
+                        
+                        // 2. Fix lỗi nếu RSS chứa phần text lặp lại hoặc bị dính chữ
+                        if(!cleanDesc) {
+                            cleanDesc = "Nhấn nút 'Đọc bài gốc' bên dưới để xem toàn bộ nội dung chi tiết và các hướng dẫn chăm sóc sức khỏe liên quan trực tiếp tại nguồn trang.";
+                        }
+
+                        let pubDate = item.pubDate ? item.pubDate.split(' ')[0] : "Cập nhật mới";
+
+                        let card = document.createElement("div");
+                        card.className = "news-card";
+                        card.innerHTML = `
+                            <div>
+                                <h3 class="news-title">${item.title}</h3>
+                                <p class="news-desc">${cleanDesc}</p> 
+                            </div>
+                            <div class="news-footer">
+                                <span>📅 Cập nhật: ${pubDate}</span>
+                                <a href="${item.link}" target="_blank" class="btn-read">Đọc bài gốc →</a>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    });
+                } else {
+                    grid.innerHTML = '<div class="error-msg">Không lấy được dữ liệu tin tức hoặc API key của bạn đã hết hạn mức.</div>';
+                }
+            } catch (err) {
+                console.error(err);
+                grid.innerHTML = '<div class="error-msg">Lỗi tải dòng tin. Bạn hãy kiểm tra lại kết nối hoặc API Key trong mã nguồn.</div>';
+            }
+        }
+
+        function switchRssSource(idx) {
+            const buttons = document.querySelectorAll(".rss-src-btn");
+            buttons.forEach((btn, index) => {
+                if (index === idx) btn.classList.add("active");
+                else btn.classList.remove("active");
+            });
+            loadRssFeed(idx);
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            renderHealthcareHub(HEALTHCARE_DATA);
+        });
+    </script>
+</body>
+</html>
 
