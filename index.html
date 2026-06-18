@@ -689,6 +689,16 @@
             renderHealthcareHub(HEALTHCARE_DATA);
         });
     </script>
+    
+    <script>
+    // Tự động ép tất cả liên kết mở trên tab hiện tại
+    document.addEventListener('click', function(e) {
+        const targetLink = e.target.closest('a');
+        if (targetLink) {
+            targetLink.removeAttribute('target'); // Xóa bỏ lệnh mở tab mới
+        }
+    });
+</script>
 </body>
 </html>
 
