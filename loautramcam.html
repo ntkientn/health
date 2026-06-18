@@ -349,10 +349,49 @@
         }
 
         footer { text-align: center; padding: 30px; color: #aaa; font-size: 14px; }
+
+        /* --- CODE CSS CHO BUTTON BACK TO HEALTHCARE --- */
+        .top-navigation-bar {
+            background-color: #ffffff; /* Nền trắng mịn màng */
+            border-b: 1px solid #e2e8f0; /* Đường viền mảnh bên dưới */
+            padding: 8px 20px;
+            width: 100%;
+        }
+
+        .btn-back-healthcare {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px; /* Kích thước nhỏ gọn */
+            font-weight: 600;
+            color: #718096; /* Màu xám nhạt không nổi bật quá */
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        /* Hiệu ứng hover đổi màu chữ sang màu xanh chủ đạo của trang */
+        .btn-back-healthcare:hover {
+            color: var(--primary); 
+        }
+
+        /* Hiệu ứng mũi tên dịch chuyển nhẹ sang trái khi rê chuột vào */
+        .btn-back-healthcare svg {
+            transition: transform 0.2s ease;
+        }
+        .btn-back-healthcare:hover :first-child {
+            transform: translateX(-2px);
+        }
     </style>
 </head>
 <body>
-
+    <div class="top-navigation-bar">
+        <a href="https://ntkientn.github.io/health/" class="btn-back-healthcare">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width: 12px; height: 12px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+            <span>Back to Healthcare</span>
+        </a>
+    </div>
     <header>
         <h1>TÂM AN</h1>
         <p>Lắng nghe khoa học, kết nối yêu thương và từng bước tự chữa lành</p>
