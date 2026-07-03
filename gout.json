@@ -177,10 +177,14 @@
   { "name": "Trứng gà", "category": "ĐỘNG VẬT", "level": 2, "limit": "1 quả / ngày", "note": "Không chứa purin, đạm rất tốt.", "isStarch": false, "isHighPurine": false, "isSalty": false },
   { "name": "Trứng cút", "category": "ĐỘNG VẬT", "level": 2, "limit": "3 – 4 quả / ngày", "note": "Không chứa purin.", "isStarch": false, "isHighPurine": false, "isSalty": false },
   { "name": "Thịt bò (thịt đỏ)", "category": "ĐỘNG VẬT", "level": 3, "limit": "≤ 70g / ngày (1-2 lần/tuần)", "note": "Thịt đỏ chứa purine cao, tăng axit uric máu.", "isStarch": false, "isHighPurine": true, "isSalty": false },
+  { "name": "Nội tạng động vật, nội tạng cá (tim gan phèo phổi, ruột, trứng cá)", "category": "ĐỘNG VẬT", "level": 5, "limit": "Tuyệt đối tránh.", "note": "Purine rất cao, tăng axit uric máu.", "isStarch": false, "isHighPurine": true, "isSalty": false },
   { "name": "Cá thu (cá biển)", "category": "ĐỘNG VẬT", "level": 3, "limit": "≤ 70g (1 khoanh mỏng)", "note": "Ăn giới hạn 1-2 lần/tuần.", "isStarch": false, "isHighPurine": true, "isSalty": false },
   { "name": "Cá nục, cá bớp, cá chim, cá đuối", "category": "ĐỘNG VẬT", "level": 3, "limit": "≤ 100g / lần (1-2 lần/tuần)", "note": "Cá biển có purine cần kiểm soát.", "isStarch": false, "isHighPurine": true, "isSalty": false },
-  { "name": "Tôm tươi", "category": "ĐỘNG VẬT", "level": 3, "limit": "3 – 4 con / lần", "note": "Hải sản ăn hạn chế.", "isStarch": false, "isHighPurine": true, "isSalty": false },
+  { "name": "Tôm tươi", "category": "ĐỘNG VẬT", "level": 3, "limit": "3 – 4 con nhỏ / lần", "note": "Hải sản ăn hạn chế.", "isStarch": false, "isHighPurine": true, "isSalty": false },
   { "name": "Mực tươi", "category": "ĐỘNG VẬT", "level": 3, "limit": "≤ 50g / lần", "note": "Hải sản ăn hạn chế.", "isStarch": false, "isHighPurine": true, "isSalty": false },
+  { "name": "Ốc hương, ốc giác", "category": "ĐỘNG VẬT", "level": 3, "limit": "≤ 100g/lần, 1–2 lần/tuần", "note": "Hải sản purine hơi cao, nhưng có protein tốt ít béo. Chú ý hạn chế chấm mắm muối.", "isStarch": false, "isHighPurine": true, "isSalty": true },
+  { "name": "Nghêu, chem chép", "category": "ĐỘNG VẬT", "level": 3, "limit": "≤ 100g/lần, 1–2 lần/tuần", "note": "Hải sản purine hơi cao, nhưng có protein tốt ít béo. Chú ý hạn chế chấm mắm muối.", "isStarch": false, "isHighPurine": true, "isSalty": true },
+  { "name": "Hàu, sò lông", "category": "ĐỘNG VẬT", "level": 4, "limit": "≤ 70g/lần, 1–2 lần/tháng", "note": "Purine khá cao. Chú ý hạn chế chấm mắm muối. Nên ăn luộc hấp, hạn chế xào, bơ tỏi sa tế, rang muối", "isStarch": false, "isHighPurine": true, "isSalty": true },
   { "name": "Trứng vịt, trứng ngỗng", "category": "ĐỘNG VẬT", "level": 3, "limit": "1 – 2 quả / tuần", "note": "Ăn giới hạn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
   { "name": "Thịt ba rọi, da, mỡ động vật", "category": "ĐỘNG VẬT", "level": 4, "limit": "1-2 lần một tháng", "note": "Nhiều chất béo bão hòa, cực xấu cho gan nhiễm mỡ.", "isStarch": false, "isHighPurine": false, "isSalty": false },
   { "name": "Cá ngừ", "category": "ĐỘNG VẬT", "level": 4, "limit": "≤ 70g (1-2 lần/tháng)", "note": "Purine biển rất cao.", "isStarch": false, "isHighPurine": true, "isSalty": false },
@@ -188,5 +192,6 @@
   { "name": "Gan, cật, óc (bò, heo)", "category": "ĐỘNG VẬT", "level": 5, "limit": "Tuyệt đối tránh", "note": "Nội tạng giàu purine nhất, gây bùng phát gout cấp ngay lập tức.", "isStarch": false, "isHighPurine": true, "isSalty": false },
   { "name": "Lòng, phèo, bao tử, tim (bò, heo)", "category": "ĐỘNG VẬT", "level": 5, "limit": "Tuyệt đối tránh", "note": "Giàu cholesterol và purine khủng khiếp.", "isStarch": false, "isHighPurine": true, "isSalty": false },
   { "name": "Cá khô, mực khô, tôm khô (ăn quá nhiều)", "category": "ĐỘNG VẬT", "level": 5, "limit": "Tuyệt đối tránh", "note": "Hải sản sấy khô purine cô đặc ở mức báo động đỏ.", "isStarch": false, "isHighPurine": true, "isSalty": true },
+  { "name": "Cá cơm, cá trích, cá mòi", "category": "ĐỘNG VẬT", "level": 5, "limit": "Tuyệt đối tránh", "note": "Purine rất cao.", "isStarch": false, "isHighPurine": true, "isSalty": false },
   { "name": "Cá muối, cá hộp", "category": "ĐỘNG VẬT", "level": 5, "limit": "Tuyệt đối tránh", "note": "Quá nhiều muối phá hủy thận nhanh chóng.", "isStarch": false, "isHighPurine": true, "isSalty": true }
 ]
