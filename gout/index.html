@@ -91,9 +91,9 @@
                         </div>
                         
                         <!-- Nội dung bài viết: Tự động ôm bao quanh ảnh -->
-                        <ul id="art-content" class="space-y-2.5 text-slate-600 text-base leading-relaxed">
-                            <!-- Data text của anh khi render ra thẻ <li> sẽ tự động tràn hàng nếu vượt quá chiều cao ảnh -->
-                        </ul>
+                        <div id="art-content" class="text-slate-600 text-[15px] md:text-base leading-relaxed text-justify space-y-3">
+                        <!-- Data text của anh khi render ra thẻ <li> sẽ tự động tràn hàng nếu vượt quá chiều cao ảnh -->
+                        </div>    
                     </div>
                 </div>
             </div>
@@ -420,13 +420,16 @@
             document.getElementById('art-title').innerText = art.title;
             document.getElementById('art-img').src = art.image;
             
-            const contentUl = document.getElementById('art-content');
-            contentUl.innerHTML = '';
+            const contentEl = document.getElementById('art-content');
+            contentEl.innerHTML = ''; // Xóa nội dung cũ đi
+        
             art.content.forEach(text => {
-                const li = document.createElement('li');
-                li.className = "flex items-start gap-2";
-                li.innerHTML = `<span class="text-emerald-500 mt-1 flex-shrink-0">•</span><span>${text}</span>`;
-                contentUl.appendChild(li);
+                // Tạo thẻ <p> thay vì thẻ <li> để chữ chảy tràn tự nhiên quanh ảnh
+                const p = document.createElement('p');
+                // Thêm khoảng cách dưới mỗi đoạn (mb-3) để bài viết phân đoạn rõ ràng, dễ đọc
+                p.className = "mb-3 text-justify text-slate-600 text-base leading-relaxed";
+                p.innerText = text;
+                contentEl.appendChild(p);
             });
         }
 
