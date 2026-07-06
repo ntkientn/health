@@ -86,7 +86,7 @@
                         <h4 id="art-title" class="text-lg font-extrabold text-emerald-800 leading-snug mb-3"></h4>
                         
                         <!-- Ảnh minh họa: Chiếm 50% trên PC (sm:w-1/2) và vẫn giữ full-width trên Mobile (w-full) -->
-                        <div class="w-full sm:w-1/2 sm:float-right sm:ml-6 sm:mb-4 mb-4">
+                        <div class="w-full sm:w-2/3 sm:float-right sm:ml-6 sm:mb-4 mb-4">
                             <img id="art-img" src="" alt="Hình minh họa" class="w-full h-auto object-cover rounded-xl border border-slate-100 shadow-xs">
                         </div>
                         
@@ -426,11 +426,24 @@
             contentEl.innerHTML = ''; // Xóa nội dung cũ đi
         
             art.content.forEach(text => {
-                // Tạo thẻ <p> thay vì thẻ <li> để chữ chảy tràn tự nhiên quanh ảnh
+                // Tạo thẻ <p> để chữ chảy tràn tự nhiên quanh ảnh
                 const p = document.createElement('p');
-                // Thêm khoảng cách dưới mỗi đoạn (mb-3) để bài viết phân đoạn rõ ràng, dễ đọc
-                p.className = "mb-3 text-justify text-slate-600 text-base leading-relaxed";
-                p.innerText = text;
+                // mb-3.5: khoảng cách đoạn; text-justify: giúp text ôm sát khít viền ảnh minh họa
+                p.className = "mb-3.5 text-justify text-slate-600 text-base leading-relaxed";
+                
+                let processedText = text;
+        
+                // TỰ ĐỘNG NHẬN DIỆN VÀ GẮN BULLET ĐẸP:
+                // Kiểm tra xem đoạn văn bắt đầu bằng dấu "·" hoặc có chứa "<b>·" hay không
+                if (processedText.trim().startsWith('·') || processedText.trim().startsWith('<b>·')) {
+                    // Thay thế dấu chấm giữa (·) thô sơ bằng icon bullet tròn màu xanh (•), có khoảng cách bên phải (mr-2)
+                    processedText = processedText.replace('·', '<span class="text-emerald-600 font-bold mr-2">•</span>');
+                    // Thêm class thụt lề trái cho riêng các dòng có bullet để phân cấp nội dung đẹp và rõ ràng hơn
+                    p.classList.add("pl-4");
+                }
+        
+                // Dùng innerHTML thay vì innerText để trình duyệt hiểu được thẻ <b> và thẻ <span> chứa bullet mới chèn
+                p.innerHTML = processedText;
                 contentEl.appendChild(p);
             });
         }
