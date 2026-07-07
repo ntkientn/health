@@ -1,19 +1,36 @@
 // Global Data Cache for Quotes and Articles
 let siteData = null;
 
-// Audio context synthetic oscillator cues for Box Breathing (In case user has eyes closed)
+// Audio context synthetic oscillator cues for Box Breathing
 let audioCtx = null;
 let breatheInterval = null;
 let totalTimeRemaining = 0;
 let totalTimerInterval = null;
-let cycleTicks = 0; // 0 to 15 representing 16 seconds full loop
+let cycleTicks = 0; 
 let isPracticing = false;
 
 // Initialize when DOM content is fully loaded
 document.addEventListener("DOMContentLoaded", () => {
     fetchSiteData();
     renderSurveyHistory();
+    
+    // Tự động cập nhật nhãn số giây (4s, 5s, 6s) của các thanh tiến trình khi đổi option nhịp thở
+    const paceSelect = document.getElementById("breath-pace");
+    if (paceSelect) {
+        updatePaceLabels(parseInt(paceSelect.value));
+        paceSelect.addEventListener("change", (e) => {
+            updatePaceLabels(parseInt(e.target.value));
+        });
+    }
 });
+
+// Hàm hỗ trợ cập nhật text hiển thị trên các thanh trạng thái dưới hình tròn
+function updatePaceLabels(pace) {
+    document.getElementById("phase-hit").innerText = `Hít vào (${pace}s)`;
+    document.getElementById("phase-giu1").innerText = `Giữ hơi (${pace}s)`;
+    document.getElementById("phase-tho").innerText = `Thở ra (${pace}s)`;
+    document.getElementById("phase-giu2").innerText = `Nghỉ (${pace}s)`;
+}
 
 // Fetch Data from JSON safely
 async function fetchSiteData() {
@@ -64,28 +81,25 @@ function loadRandomArticle() {
 
 // Tab switcher handler
 function switchTab(tabIndex) {
-    // Buttons toggle
     const buttons = document.querySelectorAll(".tab-button");
     buttons.forEach((btn, idx) => {
         if(idx + 1 === tabIndex) btn.classList.add("active");
         else btn.classList.remove("active");
     });
 
-    // Content blocks toggle
     const contents = document.querySelectorAll(".tab-content");
     contents.forEach((block, idx) => {
         if(idx + 1 === tabIndex) block.classList.add("active-content");
         else block.classList.remove("active-content");
     });
 
-    // Automatically stop breathing cycle if user navigates away from Tab 2
     if (tabIndex !== 2 && isPracticing) {
         togglePractice();
     }
 }
 
 /* ==========================================================================
-   TAB 2: BOX BREATHING ENGINE WITH AUDIO BACKGROUND & FIXED TRANSITIONS
+   TAB 2: BOX BREATHING ENGINE WITH AUDIO BACKGROUND & DYNAMIC PACE
    ========================================================================== */
 function initAudioContext() {
     if (!audioCtx) {
@@ -93,7 +107,7 @@ function initAudioContext() {
     }
 }
 
-// Play synthetic beep alert to indicate phase changes
+// PHẦN CẬP NHẬT TĂNG ÂM LƯỢNG TIẾNG BEEP CHUYỂN PHA
 function playPhaseSound(frequency, duration, type = 'sine') {
     if (!audioCtx) return;
     try {
@@ -103,7 +117,8 @@ function playPhaseSound(frequency, duration, type = 'sine') {
         osc.type = type;
         osc.frequency.value = frequency;
         
-        gainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        // Đã tăng từ 0.12 lên 0.45 giúp âm thanh hiệu lệnh nghe rõ ràng, sắc nét hơn
+        gainNode.gain.setValueAtTime(0.45, audioCtx.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
         
         osc.connect(gainNode);
@@ -120,8 +135,7 @@ function togglePractice() {
     initAudioContext();
     const startBtn = document.getElementById("btn-start-practice");
     const durationSelect = document.getElementById("practice-duration");
-    
-    // Lấy link nhạc từ menu dropdown và thẻ audio player
+    const paceSelect = document.getElementById("breath-pace");
     const audioSelect = document.getElementById("bg-music"); 
     const bgPlayer = document.getElementById("audio-bg-player");
 
@@ -131,12 +145,15 @@ function togglePractice() {
         clearInterval(totalTimerInterval);
         isPracticing = false;
         
-        startBtn.innerText = "🧘 Bắt Đầu Thiền";
+        startBtn.innerText = "🚀 Bắt Đầu Thiền";
         startBtn.classList.remove("active-stop");
         
         resetBreathingVisuals();
         
-        // Dừng nhạc nền
+        // Mở khóa cấu hình khi dừng
+        if(paceSelect) paceSelect.disabled = false;
+        if(durationSelect) durationSelect.disabled = false;
+
         if (bgPlayer) {
             bgPlayer.pause();
             bgPlayer.currentTime = 0; 
@@ -144,29 +161,33 @@ function togglePractice() {
     } else {
         // START MECHANISM
         isPracticing = true;
-        startBtn.innerText = "🛑 Dừng lại";
+        startBtn.innerText = "🛑 Dừng Thực Hành";
         startBtn.classList.add("active-stop");
+
+        // Khóa cấu hình tránh xung đột khi đang thiền
+        if(paceSelect) paceSelect.disabled = true;
+        if(durationSelect) durationSelect.disabled = true;
+
+        const chosenPace = parseInt(paceSelect.value) || 4;
+        const totalCycleSeconds = chosenPace * 4; 
 
         totalTimeRemaining = parseInt(durationSelect.value);
         updateTimerDisplay(totalTimeRemaining);
 
-        // --- PHẦN FIX LỖI NHẠC NỀN ---
-        if (bgPlayer && audioSelect.value !== "nature") {
-            bgPlayer.src = audioSelect.value; // Nạp link nhạc được chọn vào player
-            bgPlayer.volume = 0.25;           // Để âm lượng 25% cho nhẹ nhàng
+        // Kích hoạt phát nhạc nền từ menu chọn nhạc bài hát
+        if (bgPlayer && audioSelect && audioSelect.value !== "nature") {
+            bgPlayer.src = audioSelect.value;
+            bgPlayer.volume = 0.25; // Nhạc nền giữ mức 25% vừa phải dịu êm
             bgPlayer.loop = true;
-            bgPlayer.play().catch(err => {
-                console.log("Trình duyệt chặn tự động phát audio: ", err);
-            });
+            bgPlayer.play().catch(err => console.log("Audio play blocked:", err));
         }
-        // -----------------------------
 
         cycleTicks = 0;
-        executeFixedBreathingStep();
+        executeFixedBreathingStep(chosenPace);
 
         breatheInterval = setInterval(() => {
-            cycleTicks = (cycleTicks + 1) % 16;
-            executeFixedBreathingStep();
+            cycleTicks = (cycleTicks + 1) % totalCycleSeconds;
+            executeFixedBreathingStep(chosenPace);
         }, 1000);
 
         totalTimerInterval = setInterval(() => {
@@ -188,22 +209,16 @@ function updateTimerDisplay(seconds) {
     document.getElementById("timer-text").innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 }
 
-// Fix reset to avoid shrinking animation when stopped
 function resetBreathingVisuals() {
     const node = document.getElementById("breath-node");
-    
-    // Kill existing inline transition property to force still stand
     node.style.transition = "none";
-    
-    // Reset to base rest state small standstill size forced by style
     node.className = "breathing-circle rest-static state-small";
     
     document.getElementById("breath-status").innerText = "Sẵn Sàng";
     document.querySelectorAll(".pace-phase").forEach(p => p.classList.remove("active-phase"));
 }
 
-// FIXED MATRIX: 4-4-4-4 Box Breathing with Standstill States
-function executeFixedBreathingStep() {
+function executeFixedBreathingStep(pace) {
     const node = document.getElementById("breath-node");
     const statusText = document.getElementById("breath-status");
     
@@ -214,65 +229,64 @@ function executeFixedBreathingStep() {
         document.getElementById("phase-giu2")
     ];
 
-    // Remove all active phase bars highlights
     phases.forEach(p => p.classList.remove("active-phase"));
 
+    // PHA 1: HÍT VÀO
     if (cycleTicks === 0) {
-        // PHASE 1 BEGINS: INHALE (To Expand dynamically small -> large in 4s)
         phases[0].classList.add("active-phase");
-        statusText.innerText = "Hít Vào...";
-        playPhaseSound(330, 0.4); // High pulse
+        statusText.innerText = `Hít Vào (${pace}s)...`;
+        playPhaseSound(330, 0.4);
 
         node.style.transition = "none";
         node.className = "breathing-circle inhale-active state-small";
         
         void node.offsetWidth; 
         
-        node.style.transition = "width 4s linear, height 4s linear, background-color 4s linear";
+        node.style.transition = `width ${pace}s linear, height ${pace}s linear, background-color ${pace}s linear`;
         node.className = "breathing-circle inhale-active state-large";
     } 
-    else if (cycleTicks > 0 && cycleTicks < 4) {
+    else if (cycleTicks > 0 && cycleTicks < pace) {
         phases[0].classList.add("active-phase");
     }
-    else if (cycleTicks === 4) {
-        // PHASE 2 BEGINS: HOLD FULL (To Stay static large size standstill)
+    // PHA 2: GIỮ HƠI
+    else if (cycleTicks === pace) {
         phases[1].classList.add("active-phase");
-        statusText.innerText = "Giữ Hơi Thở (4s)";
-        playPhaseSound(392, 0.3); // Mid pulse
+        statusText.innerText = `Giữ Hơi Thở (${pace}s)`;
+        playPhaseSound(392, 0.3);
 
         node.style.transition = "none";
         node.className = "breathing-circle hold-static state-large"; 
     } 
-    else if (cycleTicks > 4 && cycleTicks < 8) {
+    else if (cycleTicks > pace && cycleTicks < pace * 2) {
         phases[1].classList.add("active-phase");
     }
-    else if (cycleTicks === 8) {
-        // PHASE 3 BEGINS: EXHALE (To Contract dynamically large -> small in 4s)
+    // PHA 3: THỞ RA
+    else if (cycleTicks === pace * 2) {
         phases[2].classList.add("active-phase");
-        statusText.innerText = "Thở Ra Từ Từ...";
-        playPhaseSound(261, 0.5); // Low pulse
+        statusText.innerText = `Thở Ra Từ Từ (${pace}s)...`;
+        playPhaseSound(261, 0.5);
 
         node.style.transition = "none";
         node.className = "breathing-circle exhale-active state-large";
         
         void node.offsetWidth; 
         
-        node.style.transition = "width 4s linear, height 4s linear, background-color 4s linear";
+        node.style.transition = `width ${pace}s linear, height ${pace}s linear, background-color ${pace}s linear`;
         node.className = "breathing-circle exhale-active state-small";
     } 
-    else if (cycleTicks > 8 && cycleTicks < 12) {
+    else if (cycleTicks > pace * 2 && cycleTicks < pace * 3) {
         phases[2].classList.add("active-phase");
     }
-    else if (cycleTicks === 12) {
-        // PHASE 4 BEGINS: NGHỈ/EMPTY (To Stay static small size standstill)
+    // PHA 4: NGHỈ TĨNH LẶNG
+    else if (cycleTicks === pace * 3) {
         phases[3].classList.add("active-phase");
-        statusText.innerText = "Nghỉ Tĩnh Lặng (4s)";
-        playPhaseSound(220, 0.2); // Very low pulse
+        statusText.innerText = `Nghỉ Tĩnh Lặng (${pace}s)`;
+        playPhaseSound(220, 0.2);
 
         node.style.transition = "none";
         node.className = "breathing-circle rest-static state-small"; 
     }
-    else if (cycleTicks > 12 && cycleTicks < 16) {
+    else if (cycleTicks > pace * 3 && cycleTicks < pace * 4) {
         phases[3].classList.add("active-phase");
     }
 }
@@ -298,7 +312,7 @@ function processSurvey(event) {
         advice = "Tuyệt vời! Tâm trí bạn đang có khả năng tự cân bằng sâu sắc. Tiếp tục duy trì 5-10 phút thiền thở Box Breathing hàng ngày.";
     } else if (totalScore <= 28) {
         state = "Tâm Trí Bất An Nhẹ & Stress Tích Tụ";
-        advice = "Cảnh báo nhẹ: Bạn có dấu hiệu mệt mỏi. Mở Tab 2 thực hành ngay bài thở sâu 4-4-4-4 khi cảm thấy nóng giận.";
+        advice = "Cảnh báo nhẹ: Bạn có dấu hiệu mệt mỏi. Mở Tab 2 thực hành ngay bài thở sâu khi cảm thấy nóng giận.";
     } else {
         state = "Tâm Trí Quá Tải / Cần Chữa Lành";
         advice = "Báo động: Bạn đang lo âu sâu sắc. Cần ưu tiên thiền buông thư toàn thân (Tab 2) và đọc kỹ bài viết Tab 1.";
