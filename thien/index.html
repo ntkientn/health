@@ -22,7 +22,7 @@
 
     <!-- Tab Switching Controls -->
     <nav class="tab-container">
-        <button class="tab-button active" onclick="switchTab(1)">💡 Tìm Hiểu & Triết Lý</button>
+        <button class="tab-button active" onclick="switchTab(1)">📜 Tìm Hiểu & Triết Lý</button>
         <button class="tab-button highlight-tab" onclick="switchTab(2)">🧘 Thực tập Thiền</button>
         <button class="tab-button" onclick="switchTab(3)">📊 Khảo Sát Tâm Trí</button>
     </nav>
@@ -37,7 +37,7 @@
                 <span class="quote-icon">“</span>
                 <p id="daily-quote" class="quote-text">Đang tải châm ngôn sống an nhiên...</p>
                 <div class="quote-divider"></div>
-                <button class="btn-secondary" onclick="loadRandomQuote()">✨ Đổi câu châm ngôn khác</button>
+                <button class="btn-secondary" onclick="loadRandomQuote()">🪄 Xem thêm </button>
             </div>
 
             <!-- Featured Article Section -->
@@ -71,19 +71,44 @@
                     <div class="form-group">
                         <label for="bg-music"><b>🎵 Âm thanh không gian nền:</b></label>
                         <select id="bg-music">
-                            <option value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">Nhạc thiền tịnh tâm sâu (Demo 1)</option>
-                            <option value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">Tiếng mưa rơi nhẹ nhàng (Demo 2)</option>
-                            <option value="nature">Tiếng suối chảy rừng sâu</option>
+                            <option value="bgmusic/Aylex - Meditation (freetouse.com).mp3" selected>Meditation - Aylex</option>
+                            <option value="bgmusic/Tibetan Flute.mp3">Tibetan Flute</option>
+                            <option value="bgmusic/Tibetan Healing Sound.mp3">Tibetan Healing Sound</option>
+                            <option value="bgmusic/Aeris - Home (freetouse.com).mp3">Home - Aeris</option>
+                            <option value="bgmusic/Aeris - Galaxy in Your Eyes (freetouse.com).mp3">Galaxy in your eyes - Aeris</option>
+                            <option value="bgmusic/Alegend - Destiny (freetouse.com).mp3">Destiny - Alegend</option>
+                            <option value="bgmusic/Calima - Autumn Bliss (freetouse.com).mp3">Autumn Bliss - Calima</option>
+                            <option value="bgmusic/Calima - Forest Zen (freetouse.com).mp3">Forest Zen - Calima</option>
+                            <option value="bgmusic/Calima - Full Moon (freetouse.com).mp3">Full Moon - Calima</option>
+                            <option value="bgmusic/Calima - Glass Shop (freetouse.com).mp3">Glass Shop - Calima</option>
+                            <option value="bgmusic/Calima - Himalayas (freetouse.com).mp3">Himalayas - Calima</option>
+                            <option value="bgmusic/Epic Spectrum - Morning Light (freetouse.com).mp3">Morning Light - Epic Spectrum</option>
+                            <option value="bgmusic/Epic Spectrum - Timeless (freetouse.com).mp3">Timeless - Epic Spectrum</option>
+                            <option value="bgmusic/Moavii - Butterflies (freetouse.com).mp3">Butterfilies - Moavii</option>
+                            <option value="bgmusic/Pufino - Careful (freetouse.com).mp3">Careful - Pufino</option>
+                            <option value="bgmusic/Pufino - Harmony (freetouse.com).mp3">Harmony - Pufino</option>
+                            <option value="bgmusic/Pufino - Rainy (freetouse.com).mp3">Rainny - Pufino</option>
+                            <option value="bgmusic/Tieng chuong chua.mp3">Tiếng chuông chùa</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="practice-duration"><b>⏱️ Thời lượng thực hành:</b></label>
+                        <label for="breath-pace">↔ Khung Nhịp Thở Hộp (số giây):</label>
+                        <select id="breath-pace">
+                            <option value="4" selected>4 - 4 - 4 - 4 (Chuẩn - Tỉnh táo)</option>
+                            <option value="5">5 - 5 - 5 - 5 (Nâng cao - Tĩnh tâm)</option>
+                            <option value="6">6 - 6 - 6 - 6 (Chuyên sâu - Thiền sâu)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="practice-duration">⏱ Chọn Thời Lượng:</label>
                         <select id="practice-duration">
-                            <option value="60">1 Phút (Thử nghiệm nhanh)</option>
-                            <option value="180">3 Phút (Thư giãn ngắn)</option>
-                            <option value="300" selected>5 Phút (Căn bản tiêu chuẩn)</option>
-                            <option value="600">10 Phút (Thiền sâu lắng)</option>
+                            <option value="180">3 Phút (Cứu nguy cấp tốc)</option>
+                            <option value="300" selected>5 Phút (Bình ổn tâm trí)</option>
+                            <option value="600">10 Phút (Tập trung sâu)</option>
+                            <option value="900">15 Phút (Nuôi dưỡng năng lượng)</option>
+                            <option value="1200">20 Phút (Thiền định sâu)</option>
+                            <option value="1800">30 Phút (Buông thư toàn diện)</option>
                         </select>
                     </div>
 
@@ -106,10 +131,10 @@
                     
                     <!-- Dynamic Interactive Breathing Circle -->
                     <div class="pacing-bars">
-                        <div class="pace-phase" id="phase-hit">Hít vào... (4s)</div>
-                        <div class="pace-phase" id="phase-giu1">Giữ hơi thở (4s)</div>
-                        <div class="pace-phase" id="phase-tho">Thở ra... (4s)</div>
-                        <div class="pace-phase" id="phase-giu2">Nghỉ (4s)</div>
+                        <div class="pace-phase" id="phase-hit">Hít vào... </div>
+                        <div class="pace-phase" id="phase-giu1">Giữ hơi thở </div>
+                        <div class="pace-phase" id="phase-tho">Thở ra... </div>
+                        <div class="pace-phase" id="phase-giu2">Nghỉ </div>
                     </div>
                     <div id="breath-status" class="breathing-state-text"><br>Sẵn Sàng</div>
 
@@ -253,7 +278,7 @@
         <!-- YOUTUBE RECOMMENDATIONS SECTION (SHARED VALUE) -->
         <footer class="youtube-section">
             <div class="section-title-wrapper">
-                <h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: #2c4a3e;">🎥 Video hữu ích cho thực tập Thiền</h3>
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 22px; color: #2c4a3e;">▶ Video hữu ích cho thực tập Thiền</h3>
                 <p style="color: #666; font-size: 13px;">Tuyển chọn những video hướng dẫn thiền định, điều hòa hơi thở, tâm an trí sáng.</p>
             </div>
             <div class="youtube-grid">
