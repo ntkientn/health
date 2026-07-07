@@ -316,7 +316,8 @@ h1, h2, h3, .quote-text {
     font-weight: 400;
     color: #2c4a3e;
     letter-spacing: 2px;
-    margin-bottom: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .breathing-circle-wrapper {
