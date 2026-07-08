@@ -204,7 +204,7 @@ function togglePractice() {
         // Kích hoạt phát nhạc nền từ menu chọn nhạc bài hát
         if (bgPlayer && audioSelect && audioSelect.value !== "nature") {
             bgPlayer.src = audioSelect.value;
-            bgPlayer.volume = 0.6; // Nhạc nền giữ mức 25% vừa phải dịu êm
+            bgPlayer.volume = 0.75; // Nhạc nền giữ mức 75% vừa phải dịu êm
             bgPlayer.loop = true;
             bgPlayer.play().catch(err => console.log("Audio play blocked:", err));
         }
