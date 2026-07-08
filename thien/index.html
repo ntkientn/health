@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thiền Định v1.0.1.20260707 - Tâm An Trí Sáng</title>
+    <title>Thiền Định v1.0.2.20260708 - Tâm An Trí Sáng</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,9 +22,9 @@
 
     <!-- Tab Switching Controls -->
     <nav class="tab-container">
-        <button class="tab-button active" onclick="switchTab(1)">📜 Tìm Hiểu & Triết Lý</button>
+        <button class="tab-button active" onclick="switchTab(1)">📜 Đọc về Thiền</button>
         <button class="tab-button highlight-tab" onclick="switchTab(2)">🧘 Thực tập Thiền</button>
-        <button class="tab-button" onclick="switchTab(3)">📊 Khảo Sát Tâm Trí</button>
+        <button class="tab-button" onclick="switchTab(3)">🔮 Tự nhìn lại</button>
     </nav>
 
     <!-- Main Content Container -->
@@ -37,12 +37,12 @@
                 <span class="quote-icon">“</span>
                 <p id="daily-quote" class="quote-text">Đang tải châm ngôn sống an nhiên...</p>
                 <div class="quote-divider"></div>
-                <button class="btn-secondary" onclick="loadRandomQuote()">🪄 Xem thêm </button>
+                <button class="btn-secondary" onclick="loadRandomQuote()"><span class="zoom-emoji">🪄</span> Xem thêm </button>
             </div>
 
             <!-- Featured Article Section -->
             <div class="section-title-wrapper">
-                <h2 class="section-title">Bài viết Tĩnh Tâm Hôm Nay</h2>
+                <h2 class="section-title">Bài Đọc Về Thiền</h2>
                 <p class="section-subtitle">Góc nhìn khoa học và tâm lý giúp bạn định hình tư duy tích cực, buông bỏ muộn phiền.</p>
             </div>
 
@@ -50,9 +50,6 @@
                 <!-- Dynamically populated from JSON -->
             </article>
             
-            <div class="text-center" style="margin-top: 30px;">
-                <button class="btn-primary" onclick="loadRandomArticle()">📖 Đọc bài viết ngẫu nhiên khác</button>
-            </div>
         </section>
 
 
@@ -93,7 +90,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="breath-pace">↔ Khung Nhịp Thở Hộp (số giây):</label>
+                        <label for="breath-pace"><span class="zoom-emoji">↔</span> Khung Nhịp Thở (số giây):</label>
                         <select id="breath-pace">
                             <option value="4" selected>4 - 4 - 4 - 4 (Chuẩn - Tỉnh táo)</option>
                             <option value="5">5 - 5 - 5 - 5 (Nâng cao - Tĩnh tâm)</option>
@@ -101,9 +98,9 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="practice-duration">⏱ Chọn Thời Lượng:</label>
+                        <label for="practice-duration"><span class="zoom-emoji">⏱</span> Chọn Thời Lượng:</label>
                         <select id="practice-duration">
-                            <option value="180">3 Phút (Cứu nguy cấp tốc)</option>
+                            <option value="180">3 Phút (Giảm căng thẳng cấp tốc)</option>
                             <option value="300" selected>5 Phút (Bình ổn tâm trí)</option>
                             <option value="600">10 Phút (Tập trung sâu)</option>
                             <option value="900">15 Phút (Nuôi dưỡng năng lượng)</option>
@@ -113,11 +110,11 @@
                     </div>
 
                     <div class="form-group checklist-group">
-                        <label><b>👇 Chuẩn bị trước khi thiền:</b></label>
+                        <label><b><span class="zoom-emoji">👇</span> Chuẩn bị trước khi thiền:</b></label>
                         <ul>
                             <li>✓ Ngồi thẳng lưng, thả lỏng vai và cơ mặt.</li>
                             <li>✓ Nhắm mắt lại và hướng sự chú ý vào đầu mũi.</li>
-                            <li>✓ Đeo tai nghe để lắng nghe tín hiệu hướng dẫn nhịp thở.</li>
+                            <li>✓ Lắng nghe tín hiệu hướng dẫn nhịp thở phát theo khung 4,5, hoặc 6 giây.</li>
                         </ul>
                     </div>
 
@@ -142,7 +139,7 @@
                         <div class="breathing-circle" id="breath-node"></div>
                         <div class="breathing-state-text">Hơi thở</div>
                     </div>
-                    <p class="audio-hint-notice">🔊 Hệ thống tự động phát âm thanh hướng dẫn nhịp điệu khi bạn nhắm mắt thiền.</p>
+                    <p class="audio-hint-notice">❗ Nhớ lắng nghe âm thanh hướng dẫn nhịp điệu khi bạn nhắm mắt thiền.</p>
                 </div>
             </div>
         </section>
@@ -152,7 +149,7 @@
         <section id="tab3" class="tab-content">
             <div class="section-title-wrapper">
                 <h2 class="section-title">Đánh Giá Tình Trạng Tâm Trí</h2>
-                <p class="section-subtitle">Bộ câu hỏi trắc nghiệm chánh niệm giúp bạn thấu hiểu bản thân, theo dõi sự thay đổi năng lượng qua từng ngày thực hành.</p>
+                <p class="section-subtitle">Bộ câu hỏi trắc nghiệm chánh niệm giúp bạn thấu hiểu bản thân, theo dõi sự thay đổi năng lượng tâm trí theo thời gian thực tập Thiền.</p>
             </div>
 
             <div class="survey-layout">
