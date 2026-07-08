@@ -144,8 +144,8 @@ function playPhaseSound(frequency, duration, type = 'sine') {
         osc.type = type;
         osc.frequency.value = frequency;
         
-        // Đã tăng từ 0.12 lên 0.45 giúp âm thanh hiệu lệnh nghe rõ ràng, sắc nét hơn
-        gainNode.gain.setValueAtTime(0.45, audioCtx.currentTime);
+        // Đã tăng từ 0.12 lên 0.4 giúp âm thanh hiệu lệnh nghe rõ ràng, sắc nét hơn
+        gainNode.gain.setValueAtTime(0.4, audioCtx.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
         
         osc.connect(gainNode);
@@ -204,7 +204,7 @@ function togglePractice() {
         // Kích hoạt phát nhạc nền từ menu chọn nhạc bài hát
         if (bgPlayer && audioSelect && audioSelect.value !== "nature") {
             bgPlayer.src = audioSelect.value;
-            bgPlayer.volume = 0.5; // Nhạc nền giữ mức 25% vừa phải dịu êm
+            bgPlayer.volume = 0.6; // Nhạc nền giữ mức 25% vừa phải dịu êm
             bgPlayer.loop = true;
             bgPlayer.play().catch(err => console.log("Audio play blocked:", err));
         }
