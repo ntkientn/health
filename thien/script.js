@@ -65,15 +65,42 @@ function loadRandomArticle() {
     
     const container = document.getElementById("featured-article-container");
     container.classList.remove("animate-fade");
-    void container.offsetWidth;
+    void container.offsetWidth; // Trigger reflow ổn định animation
+
+    // LẬP TRÌNH PHÒNG THỦ: Kiểm tra kiểu dữ liệu của content
+    let contentParagraphs = "";
+    
+    if (Array.isArray(article.content)) {
+        // Nếu đúng là Mảng: Tiến hành lặp map() như bình thường
+        contentParagraphs = article.content.map(para => {
+            return `<p class="article-para" style="margin-bottom: 12px; line-height: 1.6;">${para}</p>`;
+        }).join('');
+    } else if (typeof article.content === "string") {
+        // Nếu lỡ là Chuỗi thường: Tự động bọc vào 1 thẻ <p> duy nhất, không để app bị crash
+        contentParagraphs = `<p class="article-para" style="margin-bottom: 12px; line-height: 1.6;">${article.content}</p>`;
+    }
 
     container.innerHTML = `
         <div class="article-img-box" style="background-image: url('${article.image || ''}')"></div>
         <div class="article-body">
             <span class="article-tag">${article.category}</span>
-            <h3 class="article-title">${article.title}</h3>
-            <p class="article-para" style="font-weight: 500; color: #2c4a3e;">${article.summary}</p>
-            <p class="article-para">${article.content}</p>
+            <h3 class="article-title" style="margin-top: 8px; margin-bottom: 5px;">${article.title}</h3>
+            
+            <p class="article-source" style="font-size: 13px; color: #6a8276; font-style: italic; margin-bottom: 15px;">
+                ✍️ Nguồn: ${article.source}
+            </p>
+
+            <p class="article-para summary-box" style="font-weight: 600; color: #2c4a3e; margin-bottom: 15px; border-left: 3px solid #2c4a3e; padding-left: 10px;">
+                ${article.summary}
+            </p>
+            
+            <div class="article-content-main">
+                ${contentParagraphs}
+            </div>
+
+            <div class="text-center" style="margin-top: 30px;">
+                <button class="btn-primary" onclick="loadRandomArticle()"><span class="zoom-emoji">📖</span> Đọc bài viết khác</button>
+            </div>
         </div>
     `;
     container.classList.add("animate-fade");
@@ -145,7 +172,7 @@ function togglePractice() {
         clearInterval(totalTimerInterval);
         isPracticing = false;
         
-        startBtn.innerText = "🚀 Bắt Đầu Thiền";
+        startBtn.innerText = "🧘 Bắt Đầu Thiền";
         startBtn.classList.remove("active-stop");
         
         resetBreathingVisuals();
@@ -177,7 +204,7 @@ function togglePractice() {
         // Kích hoạt phát nhạc nền từ menu chọn nhạc bài hát
         if (bgPlayer && audioSelect && audioSelect.value !== "nature") {
             bgPlayer.src = audioSelect.value;
-            bgPlayer.volume = 0.3; // Nhạc nền giữ mức 30% vừa phải dịu êm
+            bgPlayer.volume = 0.25; // Nhạc nền giữ mức 25% vừa phải dịu êm
             bgPlayer.loop = true;
             bgPlayer.play().catch(err => console.log("Audio play blocked:", err));
         }
@@ -235,8 +262,7 @@ function executeFixedBreathingStep(pace) {
     if (cycleTicks === 0) {
         phases[0].classList.add("active-phase");
         statusText.innerText = `Hít Vào (${pace}s)...`;
-        playPhaseSound(330, 0.4);
-
+        playPhaseSound(784, 0.2); // Tăng từ 392Hz lên 784Hz (Nốt G5) 
         node.style.transition = "none";
         node.className = "breathing-circle inhale-active state-small";
         
@@ -252,7 +278,7 @@ function executeFixedBreathingStep(pace) {
     else if (cycleTicks === pace) {
         phases[1].classList.add("active-phase");
         statusText.innerText = `Giữ Hơi Thở (${pace}s)`;
-        playPhaseSound(392, 0.3);
+        playPhaseSound(659, 0.2); // Tăng từ 330Hz lên 659Hz (Nốt E5) - Nghe rất rõ và thanh thoát
 
         node.style.transition = "none";
         node.className = "breathing-circle hold-static state-large"; 
@@ -264,7 +290,7 @@ function executeFixedBreathingStep(pace) {
     else if (cycleTicks === pace * 2) {
         phases[2].classList.add("active-phase");
         statusText.innerText = `Thở Ra Từ Từ (${pace}s)...`;
-        playPhaseSound(261, 0.5);
+        playPhaseSound(523, 0.2); // Tăng từ 261Hz lên 523Hz (Nốt C5)
 
         node.style.transition = "none";
         node.className = "breathing-circle exhale-active state-large";
@@ -281,7 +307,7 @@ function executeFixedBreathingStep(pace) {
     else if (cycleTicks === pace * 3) {
         phases[3].classList.add("active-phase");
         statusText.innerText = `Nghỉ Tĩnh Lặng (${pace}s)`;
-        playPhaseSound(220, 0.2);
+        playPhaseSound(440, 0.2); // FIX: Tăng từ 220Hz lên 440Hz (Nốt A4 chuẩn)
 
         node.style.transition = "none";
         node.className = "breathing-circle rest-static state-small"; 
