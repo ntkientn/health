@@ -188,7 +188,7 @@ function togglePractice() {
     } else {
         // START MECHANISM
         isPracticing = true;
-        startBtn.innerText = "🛑 Dừng Thực Hành";
+        startBtn.innerText = "🛑 Dừng lại";
         startBtn.classList.add("active-stop");
 
         // Khóa cấu hình tránh xung đột khi đang thiền
@@ -204,7 +204,7 @@ function togglePractice() {
         // Kích hoạt phát nhạc nền từ menu chọn nhạc bài hát
         if (bgPlayer && audioSelect && audioSelect.value !== "nature") {
             bgPlayer.src = audioSelect.value;
-            bgPlayer.volume = 0.25; // Nhạc nền giữ mức 25% vừa phải dịu êm
+            bgPlayer.volume = 0.5; // Nhạc nền giữ mức 25% vừa phải dịu êm
             bgPlayer.loop = true;
             bgPlayer.play().catch(err => console.log("Audio play blocked:", err));
         }
