@@ -13,11 +13,18 @@ body {
     padding-bottom: 40px;
 }
 
+
 /* Custom Typography Headers */
 h1, h2, h3, .quote-text {
     font-family: 'Playfair Display', serif;
 }
 
+.zoom-emoji {
+    display: inline-block;   /* Bắt buộc phải có để transform hoạt động */
+    transform: scale(1.3);   /* Phóng to emoji lên 1.3 lần (130%) - anh có thể chỉnh số này */
+    vertical-align: middle;  /* Cân giữa emoji với dòng chữ bên cạnh */
+    margin-right: 4px;       /* Tạo một chút khoảng cách nhẹ với chữ */
+}
 /* Top Screen Header Line */
 .top-nav {
     background-color: #ffffff;
@@ -268,8 +275,8 @@ h1, h2, h3, .quote-text {
 
 .form-group label {
     display: block;
-    font-size: 13.5px;
-    font-weight: 500;
+    font-size: 14.5px;
+    font-weight: 600;
     margin-bottom: 6px;
     color: #4a544f;
 }
@@ -281,7 +288,8 @@ h1, h2, h3, .quote-text {
     border: 1px solid #cbd2ce;
     background-color: #fafaf9;
     font-family: inherit;
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: 700;
     color: #333;
     outline: none;
 }
@@ -292,7 +300,8 @@ h1, h2, h3, .quote-text {
 }
 
 .checklist-group li {
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: 600;
     color: #616d66;
     margin-bottom: 6px;
     background: #f4f6f5;
@@ -401,12 +410,12 @@ h1, h2, h3, .quote-text {
     gap: 8px;
     width: 100%;
     max-width: 360px;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 
 .pace-phase {
     flex: 1;
-    font-size: 11px;
+    font-size: 14px;
     padding: 6px 2px;
     background-color: #eae3d5;
     border-radius: 4px;
@@ -417,11 +426,11 @@ h1, h2, h3, .quote-text {
 .pace-phase.active-phase {
     background-color: #2c4a3e;
     color: #fff;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .audio-hint-notice {
-    font-size: 13px;
+    font-size: 15px;
     color: #7a8a81;
     margin-top: 10px;
 }
@@ -455,7 +464,7 @@ h1, h2, h3, .quote-text {
 }
 
 .q-title {
-    font-size: 14.5px;
+    font-size: 15.5px;
     font-weight: 600;
     color: #2c4a3e;
     margin-bottom: 10px;
@@ -463,7 +472,7 @@ h1, h2, h3, .quote-text {
 
 .radio-option {
     display: block;
-    font-size: 13.5px;
+    font-size: 14.5px;
     color: #4a544f;
     margin-bottom: 8px;
     cursor: pointer;
@@ -519,7 +528,7 @@ h1, h2, h3, .quote-text {
 }
 
 .advice-box {
-    font-size: 13.5px;
+    font-size: 14.5px;
     color: #3b4440;
     background-color: #ffffff;
     padding: 15px;
@@ -648,7 +657,7 @@ h1, h2, h3, .quote-text {
     border-radius: 25px;
     border: none;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 13.5px;
     transition: all 0.2s ease;
 }
