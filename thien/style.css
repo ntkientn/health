@@ -235,6 +235,7 @@ h1, h2, h3, .quote-text {
 
 .article-para {
     font-size: 14.5px;
+    letter-spacing: 0.3px;
     color: #4a544f;
     margin-bottom: 15px;
 }
