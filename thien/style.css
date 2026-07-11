@@ -746,3 +746,8 @@ h1, h2, h3, .quote-text {
 .text-center {
     text-align: center;
 }
+
+/* Thêm quy định cách khoảng khi auto scroll lên đầu bài viết */
+#featured-article-container {
+    scroll-margin-top: 150px; /* Nhường chỗ 90px cho thanh Header cố định */
+}
