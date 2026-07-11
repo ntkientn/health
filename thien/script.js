@@ -104,6 +104,12 @@ function loadRandomArticle() {
         </div>
     `;
     container.classList.add("animate-fade");
+
+    // 🔥 HÀNH ĐỘNG MỚI: TỰ ĐỘNG CUỘN MÀN HÌNH LÊN ĐẦU BÀI VIẾT
+    container.scrollIntoView({ 
+        behavior: 'smooth', // Cuộn mượt mà (thay bằng 'auto' nếu muốn nhảy lên ngay lập tức)
+        block: 'start'      // Đưa đỉnh của container lên sát mép trên màn hình
+    });
 }
 
 // Tab switcher handler
