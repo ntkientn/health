@@ -749,5 +749,41 @@ h1, h2, h3, .quote-text {
 
 /* Thêm quy định cách khoảng khi auto scroll lên đầu bài viết */
 #featured-article-container {
-    scroll-margin-top: 150px; /* Nhường chỗ 90px cho thanh Header cố định */
+    scroll-margin-top: 100px; /* Nhường chỗ 90px cho thanh Header cố định */
+}
+
+/* --- FIX LẠI THANH NAVIGATION (HIỆU ỨNG KÍNH MỜ APPLE) --- */
+
+/* 1. Vẫn cho Logo trôi đi */
+header, #header, .header {
+    position: relative !important;
+    top: auto !important;
+}
+
+/* 2. Biến thanh "viên thuốc" thành thanh ngang Full màn hình + Kính mờ */
+nav, .nav, .tabs, .menu, #nav-bar {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+    
+    /* Ép tràn viền, xóa bo góc và khoảng trống phía trên */
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    padding: 15px 0 !important; /* Căn chỉnh độ dày của thanh */
+    
+    /* Tạo hiệu ứng Kính mờ (Frosted Glass) */
+    background-color: rgba(255, 255, 255, 0.8) !important; /* Nền trắng trong suốt 80% */
+    backdrop-filter: blur(12px) !important; /* Làm nhòe phần chữ cuộn bên dưới */
+    -webkit-backdrop-filter: blur(12px) !important; /* Hỗ trợ trình duyệt Safari/iPhone */
+    
+    /* Thêm một đường viền siêu mỏng ở mép dưới để tạo ranh giới */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: none !important; /* Tắt bóng đổ cũ cho thanh thoát */
+    
+    /* Đảm bảo các nút bấm vẫn nằm giữa */
+    display: flex !important;
+    justify-content: center !important;
 }
