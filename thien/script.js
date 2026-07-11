@@ -1,6 +1,5 @@
 // Global Data Cache for Quotes and Articles
 let siteData = null;
-
 // Audio context synthetic oscillator cues for Box Breathing
 let audioCtx = null;
 let breatheInterval = null;
@@ -57,6 +56,7 @@ function loadRandomQuote() {
     element.classList.add("animate-fade");
 }
 
+let isFirstLoad = true;
 // Select a random article
 function loadRandomArticle() {
     if (!siteData || !siteData.articles.length) return;
@@ -106,10 +106,16 @@ function loadRandomArticle() {
     container.classList.add("animate-fade");
 
     // 🔥 HÀNH ĐỘNG MỚI: TỰ ĐỘNG CUỘN MÀN HÌNH LÊN ĐẦU BÀI VIẾT
-    container.scrollIntoView({ 
-        behavior: 'smooth', // Cuộn mượt mà (thay bằng 'auto' nếu muốn nhảy lên ngay lập tức)
-        block: 'start'      // Đưa đỉnh của container lên sát mép trên màn hình
-    });
+    if (!isFirstLoad) {
+        // Tùy vào anh đang dùng window.scrollTo hay scrollIntoView, 
+        // cứ đưa đoạn code cuộn màn hình cũ vào bên trong ngoặc nhọn này.
+        container.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start'      
+        });
+    }
+    // Đánh dấu là đã tải xong lần đầu
+    isFirstLoad = false;
 }
 
 // Tab switcher handler
