@@ -234,7 +234,7 @@ h1, h2, h3, .quote-text {
 }
 
 .article-para {
-    font-size: 14.5px;
+    font-size: 15.5px;
     letter-spacing: 0.3px;
     color: #4a544f;
     margin-bottom: 15px;
@@ -786,4 +786,8 @@ nav, .nav, .tabs, .menu, #nav-bar {
     /* Đảm bảo các nút bấm vẫn nằm giữa */
     display: flex !important;
     justify-content: center !important;
+}
+
+.tab-content, .tab-pane, #main-content, main {
+    padding-top: 30px !important;
 }
